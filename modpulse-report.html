@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ModPulse AI Report</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      color: #111;
+      line-height: 1.6;
+    }
+    .header {
+      border-bottom: 3px solid #111;
+      padding-bottom: 12px;
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+    h2 {
+      margin-top: 28px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 6px;
+    }
+    .score {
+      font-size: 24px;
+      font-weight: bold;
+      color: #b00020;
+    }
+    .box {
+      background: #f5f5f5;
+      padding: 14px;
+      border-radius: 8px;
+      margin: 12px 0;
+    }
+    textarea {
+      width: 100%;
+      height: 220px;
+      margin-top: 10px;
+      font-family: monospace;
+    }
+    button {
+      padding: 10px 16px;
+      margin: 8px 8px 8px 0;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    @media print {
+      textarea, button, .input-section {
+        display: none;
+      }
+      body {
+        margin: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>ModPulse AI Moderation Report</h1>
+    <p>PDF-ready moderation triage report for Reddit moderators.</p>
+  </div>
+
+  <div class="input-section">
+    <h2>Paste Generated Report</h2>
+    <p>Paste the report generated from your terminal below, then click Render Report.</p>
+    <textarea id="reportInput" placeholder="Paste ModPulse AI report here..."></textarea>
+    <br>
+    <button onclick="renderReport()">Render Report</button>
+    <button onclick="window.print()">Save as PDF</button>
+  </div>
+
+  <div id="reportOutput">
+    <h2>Report Preview</h2>
+    <div class="box">
+      Paste your ModPulse report above and click Render Report.
+    </div>
+  </div>
+
+  <script>
+    function escapeHtml(text) {
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+    }
+
+    function renderReport() {
+      const raw = document.getElementById("reportInput").value;
+      const safe = escapeHtml(raw);
+
+      const html = safe
+        .replace(/^# (.*)$/gm, "<h1>$1</h1>")
+        .replace(/^## (.*)$/gm, "<h2>$1</h2>")
+        .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+        .replace(/^- (.*)$/gm, "<li>$1</li>")
+        .replace(/\n/g, "<br>");
+
+      document.getElementById("reportOutput").innerHTML = html;
+    }
+  </script>
+
+</body>
+</html>

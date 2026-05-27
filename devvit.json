@@ -1,0 +1,26 @@
+{
+  "$schema": "https://developers.reddit.com/schema/config-file.v1.json",
+  "name": "modpulsetriageai",
+  "server": {
+    "dir": "dist/server",
+    "entry": "index.cjs"
+  },
+  "menu": {
+    "items": [
+      {
+        "label": "Open ModPulse AI Analyzer",
+        "description": "Analyze this post using AI and generate a full moderation report.",
+        "forUserType": "moderator",
+        "location": ["post"],
+        "endpoint": "/internal/menu/open-analyzer"
+      }
+    ]
+  },
+  "forms": {
+    "analyzerForm": "/internal/form/analyze-submit",
+    "reportForm": "/internal/form/report-close"
+  },
+  "permissions": {
+    "reddit": true
+  }
+}
